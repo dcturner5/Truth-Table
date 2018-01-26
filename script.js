@@ -6,7 +6,7 @@ function run(str) {
     var bss = [];
     for(var i = 0; i < Math.pow(2, vs.length); i++) {
         var bs = [];
-        for(var j = 0; j < vs.length; j++) bs.push((i >> j) & 1);
+        for(var j = vs.length - 1; j >= 0; j--) bs.push((i >> j) & 1);
         bs.push(solve(pstr, vs, bs));
         bss.push(bs);
     }
