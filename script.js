@@ -24,9 +24,10 @@ function parse(str) {
         var l = 0;
         for(var j = i - 1; j >= 0; j--) {
             var c = str.charAt(j);
-            if((c == '&' || c == '|') && l == 0) {
+            if((c == '&' || c == '|' || j == 0) && l == 0) {
                 str = str.slice(0, i) + str.slice(i + 1);
-                str = str.slice(0, j + 1) + '!' + str.slice(j + 1);
+                if(j == 0) str = str.slice(0, j) + '!' + str.slice(j);
+                else str = str.slice(0, j + 1) + '!' + str.slice(j + 1);
                 break;
             }
             if(c == ')') l++;
@@ -50,7 +51,7 @@ function getVariables(str) {
     var r = str.split('!').join(',').split('&').join(',').split('|').join(',').split('(').join(',').split(')').join(',').split(',');
     for(var i = 0; i < r.length; i++) {
         var v = r[i];
-        if(v != "" && vs.indexOf(v) == -1) vs.push(v);
+        if(v != "" && vs.indexOf(v) == -1 && isNaN(v)) vs.push(v);
     }
     return vs.sort();
 }
